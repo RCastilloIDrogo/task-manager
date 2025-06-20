@@ -55,16 +55,16 @@ export default function TasksPage() {
       });
       fetchTasks();
     } catch (err) {
-      console.error("Error al eliminar:", err);
+      console.error("Error al eliminar tarea:", err);
     }
   };
 
   return (
-    <div className="p-10">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl">Mis Tareas</h1>
+    <div className="p-8 max-w-4xl mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-white">📋 Mis Tareas</h1>
         <button
-          className="text-gray-500 underline"
+          className="text-sm text-gray-400 hover:text-white underline"
           onClick={() => {
             localStorage.removeItem("token");
             router.push("/login");
@@ -75,43 +75,60 @@ export default function TasksPage() {
       </div>
 
       <button
-        className="bg-green-600 text-white px-4 py-2 mb-4"
+        className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded mb-6"
         onClick={() => router.push("/tasks/new")}
       >
-        Nueva Tarea
+        + Nueva Tarea
       </button>
 
-      {error && <p className="text-red-600 mb-2">{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      {tasks.length > 0
-        ? tasks.map((task) => (
-            <div key={task.id} className="border p-4 mb-2">
-              <h2 className="font-bold">{task.title}</h2>
-              <p>{task.description}</p>
-              <button
-                onClick={() => router.push(`/tasks/${task.id}`)}
-                className="text-blue-600 mr-2"
-              >
-                Ver
-              </button>
-              <button
-                onClick={() => eliminar(task.id)}
-                className="text-red-600"
-              >
-                Eliminar
-              </button>
+      {tasks.length > 0 ? (
+        <div className="space-y-4">
+          {tasks.map((task) => (
+            <div
+              key={task.id}
+              className="border border-gray-700 rounded-lg p-5 bg-gray-900 shadow-sm"
+            >
+              <h2 className="text-xl font-semibold text-white mb-1">
+                {task.title}
+              </h2>
+              <p className="text-gray-300">{task.description}</p>
+
+              <div className="flex gap-4 mt-4">
+                <button
+                  onClick={() => router.push(`/tasks/${task.id}`)}
+                  className="text-sm text-blue-400 hover:text-blue-300 underline"
+                >
+                  ✏️ Editar
+                </button>
+                <button
+                  onClick={() => eliminar(task.id)}
+                  className="text-sm text-red-400 hover:text-red-300 underline"
+                >
+                  🗑️ Eliminar
+                </button>
+              </div>
             </div>
-          ))
-        : !error && <p>No hay tareas disponibles.</p>}
+          ))}
+        </div>
+      ) : !error ? (
+        <p className="text-gray-400">No hay tareas disponibles.</p>
+      ) : null}
 
-      <div className="mt-4">
+      <div className="flex justify-center mt-8 gap-4">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
-          className="mr-2"
+          className="text-sm px-4 py-2 border border-gray-600 rounded hover:bg-gray-700"
         >
-          Anterior
+          ← Anterior
         </button>
-        <button onClick={() => setPage((p) => p + 1)}>Siguiente</button>
+        <button
+          onClick={() => setPage((p) => p + 1)}
+          className="text-sm px-4 py-2 border border-gray-600 rounded hover:bg-gray-700"
+        >
+          Siguiente →
+        </button>
       </div>
     </div>
   );
