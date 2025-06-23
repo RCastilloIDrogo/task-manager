@@ -1,3 +1,5 @@
+//Formulario que guarda el token en localStorage
+
 "use client";
 
 import { useState } from "react";

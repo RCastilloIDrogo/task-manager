@@ -1,8 +1,9 @@
+##Filtrar por usuario autenticado en `get_queryset
 from rest_framework import viewsets, permissions
 from .models import Task
 from .serializers import TaskSerializer
 
-class TaskViewSet(viewsets.ModelViewSet):
+class TaskViewSet(viewsets.ModelViewSet): #USAR
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 

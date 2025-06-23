@@ -1,3 +1,5 @@
+##Registro el router de DRF para exponer el CRUD de tareas.
+
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import TaskViewSet
